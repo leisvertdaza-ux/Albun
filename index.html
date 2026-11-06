@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es" class="en-entrada">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mirely</title>
+  <meta name="description" content="Mirely: una exposición de fotos que se recorre en tres dimensiones.">
+  <meta name="theme-color" content="#3d0612">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Italiana&family=Jost:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/galaxia.css">
+</head>
+<body>
+  <!-- Entrada -->
+  <section class="entrada" id="entrada" aria-labelledby="entrada-titulo">
+    <div class="entrada-contenido">
+      <p class="rotulo">Una exposición de fotos</p>
+      <h1 id="entrada-titulo" aria-label="Mirely">Mirely</h1>
+      <p class="rotulo" id="entrada-datos"></p>
+      <div class="entrada-botones">
+        <button class="boton principal" id="entrar-musica" type="button">Entrar con música</button>
+        <button class="boton" id="entrar-silencio" type="button">Entrar sin música</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- El espacio 3D queda fijo; lo que se desplaza son los tramos invisibles de abajo -->
+  <div class="ambiente" aria-hidden="true">
+    <div class="ambiente-capa" id="ambiente-a"></div>
+    <div class="ambiente-capa" id="ambiente-b"></div>
+  </div>
+
+  <div class="grano" id="grano" aria-hidden="true"></div>
+
+  <main class="escenario" id="escenario">
+    <div class="escena" id="escena"></div>
+  </main>
+
+  <div class="frase" id="frase" aria-hidden="true">
+    <p class="frase-numero" id="frase-numero"></p>
+    <p class="frase-texto" id="frase-texto"></p>
+  </div>
+
+  <div class="tramos" id="tramos" aria-hidden="true"></div>
+
+  <!-- Controles siempre visibles -->
+  <header class="barra barra-arriba">
+    <button class="marca" id="ir-inicio" type="button">Mirely</button>
+    <button class="enlace" id="abrir-indice" type="button">Todas las fotos</button>
+  </header>
+
+  <footer class="barra barra-abajo">
+    <p class="ubicacion"><span id="ubicacion-capitulo"></span> <span class="ubicacion-numero" id="ubicacion-numero"></span></p>
+    <p class="pista" id="pista">Desplázate hacia abajo para avanzar</p>
+    <button class="boton-musica" id="boton-musica" type="button">
+      <span class="ondas" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span class="boton-musica-texto">Poner música</span>
+    </button>
+  </footer>
+  <div class="progreso" aria-hidden="true"><div id="progreso-linea"></div></div>
+
+  <!-- Todas las fotos -->
+  <dialog id="indice" aria-labelledby="indice-titulo">
+    <div class="indice-marco">
+      <div class="indice-cabecera">
+        <h2 id="indice-titulo">Todas las fotos</h2>
+        <button class="enlace" id="indice-cerrar" type="button">Cerrar</button>
+      </div>
+      <div id="indice-lista"></div>
+    </div>
+  </dialog>
+
+  <!-- Foto ampliada -->
+  <dialog id="visor" aria-label="Foto ampliada">
+    <div class="visor-marco">
+      <div class="visor-barra">
+        <span id="visor-contador"></span>
+        <button class="enlace" id="visor-cerrar" type="button">Cerrar</button>
+      </div>
+      <div class="visor-foto" id="visor-area"><img id="visor-img" alt=""></div>
+      <div class="visor-barra">
+        <button class="enlace" id="visor-anterior" type="button">Anterior</button>
+        <p id="visor-frase"></p>
+        <button class="enlace" id="visor-siguiente" type="button">Siguiente</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Galaxia 3D -->
+  <section class="galaxia" id="galaxia" aria-label="Galaxia de fotos" hidden>
+    <canvas id="galaxia-lienzo" aria-label="Galaxia en 3D con las fotos de Mirely orbitando"></canvas>
+    <div class="galaxia-destello" id="galaxia-destello" aria-hidden="true"></div>
+    <p class="galaxia-aviso" id="galaxia-aviso" hidden></p>
+    <div class="galaxia-arriba">
+      <p class="galaxia-marca">Mirely</p>
+      <button class="enlace" id="galaxia-salir" type="button">Volver al álbum</button>
+    </div>
+    <div class="galaxia-abajo">
+      <p class="galaxia-pista">Arrastra para girar la galaxia y toca una foto para visitarla</p>
+      <div class="galaxia-tarjeta" aria-live="polite">
+        <p class="galaxia-numero" id="galaxia-numero"></p>
+        <p class="galaxia-frase" id="galaxia-frase"></p>
+      </div>
+      <div class="galaxia-controles">
+        <button class="boton" id="galaxia-anterior" type="button">Anterior</button>
+        <button class="boton galaxia-solo-foto" id="galaxia-ver" type="button">Ver foto completa</button>
+        <button class="boton galaxia-solo-foto" id="galaxia-alejarse" type="button">Alejarse</button>
+        <button class="boton" id="galaxia-siguiente" type="button">Siguiente</button>
+        <button class="boton-musica" type="button">
+          <span class="ondas" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="boton-musica-texto">Poner música</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <audio id="musica" src="audio/musica.mp3" loop preload="metadata"></audio>
+  <script src="js/app.js"></script>
+  <script src="js/galaxia.js"></script>
+</body>
+</html>

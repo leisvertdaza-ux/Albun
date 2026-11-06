@@ -1,0 +1,104 @@
+/* Galaxia 3D: pantalla completa encima del álbum */
+html.en-galaxia { overflow: hidden; }
+
+.galaxia {
+  --acento: #ffd28a;
+  --texto: #fff4ec;
+  --halo: #7a1f4f;
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  overflow: hidden;
+  background: #04020a;
+  color: var(--marfil);
+  transition: --acento 1s ease, --texto 1s ease;
+}
+.galaxia[hidden] { display: none; }
+
+#galaxia-lienzo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+#galaxia-lienzo:active { cursor: grabbing; }
+
+.galaxia-destello {
+  position: absolute;
+  inset: 0;
+  background: #fff8f0;
+  opacity: 0;
+  pointer-events: none;
+}
+.galaxia-destello.activo { animation: destello 1.3s ease-out both; }
+@keyframes destello { 0% { opacity: 0; } 12% { opacity: .95; } 100% { opacity: 0; } }
+
+.galaxia-aviso {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  left: 20px;
+  margin: 0;
+  font: italic 400 clamp(24px, 3vw, 36px)/1.2 var(--frases);
+  text-align: center;
+  transform: translateY(-50%);
+}
+
+.galaxia-arriba, .galaxia-abajo { position: absolute; right: 0; left: 0; }
+.galaxia-arriba {
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px));
+}
+.galaxia-marca { margin: 0; font: 400 28px/1 var(--titulos); opacity: 0; transition: opacity 1s; }
+.galaxia-arriba .enlace { background: none; }
+
+.galaxia-abajo {
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 0 max(20px, env(safe-area-inset-right, 0px)) max(18px, env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px));
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s;
+}
+.galaxia.lista .galaxia-abajo { opacity: 1; }
+.galaxia.lista .galaxia-marca { opacity: 1; }
+.galaxia.lista .galaxia-controles, .galaxia.lista .galaxia-abajo button { pointer-events: auto; }
+
+.galaxia-pista { margin: 0; color: var(--tenue); font-size: 15px; }
+.galaxia.con-foto .galaxia-pista { display: none; }
+
+.galaxia-tarjeta { display: none; max-width: 640px; }
+.galaxia.con-foto .galaxia-tarjeta { display: block; animation: aparecer .8s ease both; }
+.galaxia-numero { margin: 0 0 6px; color: var(--acento); font-size: 13px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; }
+.galaxia-frase {
+  margin: 0;
+  color: var(--texto);
+  font: italic 400 clamp(25px, 3.2vw, 46px)/1.1 var(--frases);
+  text-shadow: 0 2px 24px #000000e6, 0 0 6px #00000099;
+  text-wrap: balance;
+}
+
+.galaxia-controles { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+.galaxia-controles .boton { min-height: 44px; padding: 10px 18px; background: #0d05088c; font-size: 15px; backdrop-filter: blur(6px); }
+.galaxia-controles .boton:hover { background: var(--marfil); }
+.galaxia-solo-foto { display: none; }
+.galaxia.con-foto .galaxia-solo-foto { display: inline-block; }
+
+/* Sobre el visor de fotos: debe quedar por encima de la galaxia */
+.galaxia .boton-musica { flex: none; min-height: 44px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .galaxia-destello { display: none; }
+}
